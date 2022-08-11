@@ -224,17 +224,25 @@ class Triplane:
     # drawing all three tangles side by side
     def draw(self):
 
+        drawing = ""
         # first, get each drawing
         t1_lines = ((self.tangle_1).draw()).splitlines()
         t2_lines = ((self.tangle_2).draw()).splitlines()
         t3_lines = ((self.tangle_3).draw()).splitlines()
 
+        height = max(len(t1_lines), len(t2_lines), len(t3_lines))
 
+        for i in range(height - len(t1_lines)):
+            t1_lines.insert(0, (2*(self.tangle_1).strands - 1)*" ")
+        for i in range(height - len(t2_lines)):
+            t2_lines.insert(0, (2*(self.tangle_2).strands - 1)*" ")
+        for i in range(height - len(t3_lines)):
+            t3_lines.insert(0, (2*(self.tangle_3).strands - 1)*" ")
 
-
-
-
-
+        for h in range(height):
+            drawing += t1_lines[h] + " "*5 + t2_lines[h] + " "*5 + t3_lines[h] + "\n"
+        drawing += (3*(2*self.strands-1) + 10) * "*"
+        return drawing
 
 
 class GroupPres:

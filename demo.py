@@ -2,10 +2,11 @@ import trisections as tri
 
 braid = tri.Braid(4, [1,-2])
 tangle = tri.Tangle(braid, "wickets")
-print(tangle.draw())
+flat = tri.Tangle(tri.Braid(4,[]),"wickets")
+#print(tangle.draw())
 
-triplane = tri.Triplane(tangle, tangle, tangle)
-triplane.draw()
+triplane = tri.Triplane(tangle, tangle.mirror(), flat)
+print(triplane.draw())
 
 
 gp = tri.GroupPres(4,[[1,2]])
