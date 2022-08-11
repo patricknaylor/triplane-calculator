@@ -244,6 +244,10 @@ class Triplane:
         drawing += (3*(2*self.strands-1) + 10) * "*"
         return drawing
 
+    # check if this really is a valid triplane diagram -- gets called in constructor
+    def is_valid(self):
+        pass
+
 
 class GroupPres:
 
