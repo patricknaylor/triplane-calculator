@@ -97,7 +97,7 @@ class Tangle:
         self.braid = braid
 
         for key in self.endpoints:
-            if key not in (self.endpoints).values() or self.endpoints[key] == key:
+            if key not in self.endpoints.values() or self.endpoints[key] == key:
                 raise "Tangle wasn't set up correctly!"
 
     # representation
@@ -223,3 +223,41 @@ class Triplane:
     # drawing all three tangles side by side
     def draw(self):
         pass
+
+
+class GroupPres:
+
+    # constructor
+    def __init__(self, gens, rels):
+        self.gens = gens
+        self.rels = rels
+
+        if type(gens) != int or gens <= 0:
+            raise "Group presentation not set up correctly: generators must a positive integer."
+
+        if type(rels) != list:
+            raise "Group presentation not set up correctly: relations must be a list of integers."
+
+        for relation in self.rels:
+            for i in relation:
+                if abs(i) > gens:
+                    raise "Group presentation not set up correctly: more generators than specified."
+
+    # representation
+    def __repr__(self):
+        return "Group presentation on {} generators with {} relations.".format(self.gens, len(self.rels))
+
+    # add generators
+    def add_gens(self, number):
+        if number <= 0:
+            raise "You can't delete generators."
+        self.gens += number
+
+    # add relations
+    def add_rels(self, new_rels):
+        if type(new_rels) != list:
+            raise "Something went wrong: you can't add this as a relation."
+        (self.rels).append(new_rels)
+
+
+
