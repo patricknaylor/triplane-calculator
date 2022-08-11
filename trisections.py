@@ -1,12 +1,16 @@
-# here are some class files for the objects we'll need.
-# includes "Braid" at the moment; maybe others
+# main "trisection" class files
 
 # To add:
-# triplane diagrams
-# compute pd code?
-# unlink detection -- tentative plan: get PD code by gluing braid to crossing-less tangles;
-# then compute everything in snappy
-# make sure tangles can be built with no crossings
+
+# -triplanes:
+# compute fundamental group of triplane diagram; input: triplane class -> output grouppres class
+# compute peripheral subgroup
+
+# -knots, etc
+# compute pd code from knot
+# unlink detection -- use PD code to compute invariants using snappy
+# then certify unlink using LinkInfo database
+# make sure tangles are legitimate, i.e, can be built with no crossings
 
 class Braid:
 
