@@ -7,8 +7,6 @@
 # unlink detection -- tentative plan: get PD code by gluing braid to crossing-less tangles;
 # then compute everything in snappy
 # make sure tangles can be built with no crossings
-# add GroupPres class; functions include add_gen, add_rel, basic_simplify
-
 
 class Braid:
 
@@ -96,9 +94,12 @@ class Tangle:
 
         self.braid = braid
 
+        # check that every endpoint is paired correctly
         for key in self.endpoints:
             if key not in self.endpoints.values() or self.endpoints[key] == key:
                 raise "Tangle wasn't set up correctly!"
+
+        # check that this tangle can be built without crossings
 
     # representation
     def __repr__(self):
@@ -222,7 +223,18 @@ class Triplane:
 
     # drawing all three tangles side by side
     def draw(self):
-        pass
+
+        # first, get each drawing
+        t1_lines = ((self.tangle_1).draw()).splitlines()
+        t2_lines = ((self.tangle_2).draw()).splitlines()
+        t3_lines = ((self.tangle_3).draw()).splitlines()
+
+
+
+
+
+
+
 
 
 class GroupPres:

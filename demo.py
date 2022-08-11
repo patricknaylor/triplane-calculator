@@ -4,6 +4,9 @@ braid = tri.Braid(4, [1,-2])
 tangle = tri.Tangle(braid, "wickets")
 print(tangle.draw())
 
+triplane = tri.Triplane(tangle, tangle, tangle)
+triplane.draw()
+
 
 gp = tri.GroupPres(4,[[1,2]])
 print(gp)
