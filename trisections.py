@@ -290,5 +290,7 @@ class GroupPres:
             raise "Something went wrong: you can't add this as a relation."
         (self.rels).append(new_rels)
 
+    # G<x,y> := FPGroup< x,y |  y^-1*x*y*x^-1*y*x*y^-1*x^-1*y*x^-1,y^2 >;
+    # magma format
 
 
