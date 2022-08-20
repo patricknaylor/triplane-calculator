@@ -12,6 +12,9 @@
 # then certify unlink using LinkInfo database
 # make sure tangles are legitimate, i.e, can be built with no crossings
 
+# -group presentations
+# output in magma format
+
 class Braid:
 
     # constructor; initializes number of strands and presentation in Artin generators
