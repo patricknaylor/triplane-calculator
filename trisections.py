@@ -15,6 +15,58 @@
 # -group presentations
 # output in magma format
 
+def wirtrep(rel):
+    wstr = ""
+    if(len(rel) == 0):
+        wstr = "1 "
+        return wstr
+    i = 0
+    while i < len(rel):
+        c = list[i]
+        exp = 1
+        j = i+1
+        while j < len(rel):
+            if(rel[j] == c):
+                exp += 1
+                j += 1
+            else:
+                break
+        i = j
+        if(c>0 and exp==1):
+            wstr += ("x"+str(c)+" ")
+        elif(c>0):
+            wstr += ("(x"+str(c)+")^"+str(exp)+" ")
+        else:
+            wstr += ("(x"+str(-1*c)+")^"+str(-1*exp)+" ")
+    return wstr
+
+def wirtrep_magma(rel):
+    wstr = ""
+    if(len(rel) == 0):
+        wstr = "1"
+        return wstr
+    i = 0
+    while i < len(rel):
+        c = list[i]
+        exp = 1
+        j = i+1
+        while j < len(rel):
+            if(rel[j] == c):
+                exp += 1
+                j += 1
+            else:
+                break
+        i = j
+        if(c>0 and exp==1):
+            wstr += ("x"+str(c)+"*")
+        elif(c>0):
+            wstr += ("(x"+str(c)+")^"+str(exp)+"*")
+        else:
+            wstr += ("(x"+str(-1*c)+")^"+str(-1*exp)+"*")
+    wstr = wstr[:-1]
+    return wstr
+
+
 class Braid:
 
     # constructor; initializes number of strands and presentation in Artin generators
@@ -290,7 +342,44 @@ class GroupPres:
             raise "Something went wrong: you can't add this as a relation."
         (self.rels).append(new_rels)
 
+    def wirt(self):
+        wirt = "("
+        for i in range(gens):
+            wirt += "x" + str(i+1)
+            if(i != n-1):
+                wirt += ", "
+        if(len(rels) == 0):
+            wirt += ")"
+            return wirt
+        wirt += " | "
+        for i in range(len(rels)):
+            if(i != 0):
+                wirt += ", "
+            wirt += wirtrep(rels[i])
+            wirt += "= 1"
+        wirt += ")"
+        return wirt
+
+    def wirt_magma(self):
+        generators = ""
+        for i in range(gens):
+            generators += "x" + str(i+1)
+            if(i != n-1):
+                generators += ","
+        wirt = "G<"
+        wirt += generators
+        wirt += "> := FPGroup< "
+        wirt += generators
+        if(len(rels) == 0):
+            wirt += ">"
+            return wirt
+        wirt += " | "
+        for i in range(len(rels)):
+            if(i != 0):
+                wirt += ","
+            wirt += wirtrep_magma(rels[i])
+        wirt += " >"
+        return wirt
+
     # G<x,y> := FPGroup< x,y |  y^-1*x*y*x^-1*y*x*y^-1*x^-1*y*x^-1,y^2 >;
     # magma format
-
-
