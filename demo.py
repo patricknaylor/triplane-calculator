@@ -4,15 +4,12 @@ import trisections as tri
 
 braid = tri.Braid(4, [1,-2])
 tangle = tri.Tangle(braid, "wickets")
-flat = tri.Tangle(tri.Braid(4,[]),"wickets")
-#print(tangle.draw())
+tangle2 = tri.Tangle(tri.Braid(4, [3]), {1:4, 2:3, 3:2, 4:1})
 
-triplane = tri.Triplane(tri.Tangle(tri.Braid(4, [1,3,-2,1]), "wickets"), tangle.mirror(), flat)
-print(triplane.draw())
+print(tangle.draw())
+print((tangle.mirror()).draw())
+knot = tri.Knot(tangle2, tangle.mirror())
+knot.pdcode()
 
-
-gp = tri.GroupPres(4,[[1,2]])
-print(gp)
-gp.add_gens(2)
-gp.add_rels([[1,2]])
-print(gp)
+print((knot.braid).draw())
+print(knot.draw())

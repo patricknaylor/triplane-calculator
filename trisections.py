@@ -15,20 +15,20 @@
 class Braid:
 
     # constructor; initializes number of strands and presentation in Artin generators
-    def __init__(self, strands, word):
+    def __init__(self, strands, braid):
 
         self.strands = strands
-        self.word = word
+        self.braid = braid
 
         # error checking
-        if type(strands) != int or type(word) != list:
+        if type(strands) != int or type(braid) != list:
             raise "Something went wrong with your braid input."
-        if len(self.word) != 0 and max(self.word) > self.strands - 1:
+        if len(self.braid) != 0 and max(self.braid) > self.strands - 1:
             raise "The braid you tried to build doesn't have enough strands."
 
     # representation
     def __repr__(self):
-        return "Braid on {} strands given by {} in Artin generators.".format(self.strands, self.word)
+        return "Braid on {} strands given by {} in Artin generators.".format(self.strands, self.braid)
 
     # adding method
     def __add__(self, other):
@@ -37,7 +37,7 @@ class Braid:
         if self.strands != other.strands:
             raise "You can't add these braids together!"
 
-        return Braid(self.strands, self.word + other.word)
+        return Braid(self.strands, self.braid + other.braid)
 
     # drawing method
     def draw(self):
@@ -45,12 +45,12 @@ class Braid:
         drawing = ""
 
         # something to print in the empty case
-        if len(self.word) == 0:
+        if len(self.braid) == 0:
             drawing = "| " * (self.strands - 1) + "|\n"
             return drawing
         else:
             # print the braid
-            for element in self.word:
+            for element in self.braid[::-1]:
                 line = ""
                 if element > 0:
                     for i in range(element - 1):
@@ -74,7 +74,7 @@ class Braid:
 
     # this method returns the mirror of the braid
     def mirror(self):
-        return Braid(self.strands, [-i for i in self.word])
+        return Braid(self.strands, [-i for i in self.braid])
 
 
 # for us, a tangle will be a braid with a (crossing-less) identification of the endpoints.
@@ -83,7 +83,6 @@ class Tangle:
 
     # constructor
     def __init__(self, braid, endpoints):
-
         self.strands = braid.strands
         if endpoints == 'wickets':
             wickets = {}
@@ -146,7 +145,7 @@ class Tangle:
             drawing += "\n"
 
         # now add this to the braid and return
-        if (self.braid).word == []:
+        if (self.braid).braid == []:
             return drawing
         else:
             return drawing + self.braid.draw()
@@ -165,6 +164,10 @@ class Knot:
         self.top = top
         self.bottom = bottom
         self.strands = top.strands
+
+        bottom_word = [i for i in ((self.bottom).braid).braid[::-1]]
+        self.braid = Braid(self.strands, bottom_word) + top.braid
+
         if type(top) != Tangle or type(bottom) != Tangle:
             raise "Knot wasn't set up correctly; you need to declare two tangles"
         if self.top.strands != self.strands or self.bottom.strands != self.strands:
@@ -195,9 +198,6 @@ class Knot:
         else:
             return top_drawing + bottom_drawing
 
-    # mirroring
-    def mirror(self):
-        pass
 
     # compute the pd code of the knot: this will be important for unlink detection
     def pdcode(self):
