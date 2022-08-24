@@ -12,6 +12,9 @@
 # then certify unlink using LinkInfo database
 # make sure tangles are legitimate, i.e, can be built with no crossings
 
+# -group presentations
+# output in magma format
+
 class Braid:
 
     # constructor; initializes number of strands and presentation in Artin generators
@@ -287,5 +290,7 @@ class GroupPres:
             raise "Something went wrong: you can't add this as a relation."
         (self.rels).append(new_rels)
 
+    # G<x,y> := FPGroup< x,y |  y^-1*x*y*x^-1*y*x*y^-1*x^-1*y*x^-1,y^2 >;
+    # magma format
 
 
