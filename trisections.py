@@ -35,9 +35,9 @@ def wirtrep(rel):
         if(c>0 and exp==1):
             wstr += ("x"+str(c)+" ")
         elif(c>0):
-            wstr += ("(x"+str(c)+")^"+str(exp)+" ")
+            wstr += ("x"+str(c)+"^"+str(exp)+" ")
         else:
-            wstr += ("(x"+str(-1*c)+")^"+str(-1*exp)+" ")
+            wstr += ("x"+str(-1*c)+"^"+str(-1*exp)+" ")
     return wstr
 
 def wirtrep_magma(rel):
