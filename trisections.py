@@ -12,8 +12,6 @@
 # then certify unlink using LinkInfo database
 # make sure tangles are legitimate, i.e, can be built with no crossings
 
-# -group presentations
-# output in magma format
 
 def wirtrep(rel):
     wstr = ""
