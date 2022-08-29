@@ -13,30 +13,6 @@
 # make sure tangles are legitimate, i.e, can be built with no crossings
 
 
-def wirtrep(rel):
-    wstr = ""
-    if(len(rel) == 0):
-        wstr = "1 "
-        return wstr
-    i = 0
-    while i < len(rel):
-        c = list[i]
-        exp = 1
-        j = i+1
-        while j < len(rel):
-            if(rel[j] == c):
-                exp += 1
-                j += 1
-            else:
-                break
-        i = j
-        if(c>0 and exp==1):
-            wstr += ("x"+str(c)+" ")
-        elif(c>0):
-            wstr += ("x"+str(c)+"^"+str(exp)+" ")
-        else:
-            wstr += ("x"+str(-1*c)+"^"+str(-1*exp)+" ")
-    return wstr
 
 def wirtrep_magma(rel):
     wstr = ""
@@ -501,6 +477,32 @@ class GroupPres:
         (self.rels).append(new_rels)
 
     def wirt(self):
+        
+        def wirtrep(rel):
+            wstr = ""
+            if(len(rel) == 0):
+                wstr = "1 "
+                return wstr
+            i = 0
+            while i < len(rel):
+                c = list[i]
+                exp = 1
+                j = i+1
+                while j < len(rel):
+                    if(rel[j] == c):
+                        exp += 1
+                        j += 1
+                    else:
+                        break
+                i = j
+                if(c>0 and exp==1):
+                    wstr += ("x"+str(c)+" ")
+                elif(c>0):
+                    wstr += ("x"+str(c)+"^"+str(exp)+" ")
+                else:
+                    wstr += ("x"+str(-1*c)+"^"+str(-1*exp)+" ")
+            return wstr
+        
         wirt = "("
         for i in range(gens):
             wirt += "x" + str(i+1)
@@ -519,6 +521,33 @@ class GroupPres:
         return wirt
 
     def wirt_magma(self):
+        
+        def wirtrep_magma(rel):
+            wstr = ""
+            if(len(rel) == 0):
+                wstr = "1"
+                return wstr
+            i = 0
+            while i < len(rel):
+                c = list[i]
+                exp = 1
+                j = i+1
+                while j < len(rel):
+                    if(rel[j] == c):
+                        exp += 1
+                        j += 1
+                    else:
+                        break
+                i = j
+                if(c>0 and exp==1):
+                    wstr += ("x"+str(c)+"*")
+                elif(c>0):
+                    wstr += ("(x"+str(c)+")^"+str(exp)+"*")
+                else:
+                    wstr += ("(x"+str(-1*c)+")^"+str(-1*exp)+"*")
+            wstr = wstr[:-1]
+            return wstr
+        
         generators = ""
         for i in range(gens):
             generators += "x" + str(i+1)
