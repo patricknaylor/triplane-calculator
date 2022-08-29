@@ -304,6 +304,166 @@ class Triplane:
     # check if this really is a valid triplane diagram -- gets called in constructor
     def is_valid(self):
         pass
+    
+    def fundamental_group_arbitrary(self):
+
+        def generators_initialize_arbitrary(n):
+            generators = [None]*n
+            for i in range(n):
+                if(i%2 == 0):
+                    generators[i] = [i+1]
+                else:
+                    generators[i] = [-1*(i+1)]
+            return generators
+
+        def generators_percolate(generatorsp,braid1):
+            generators = generatorsp.copy()
+            braid = braid1.braid
+            for i in range(len(braid)):
+                e = braid[i]
+                if(e>0):
+                    temp = generators[e].copy() #the undercrossing element
+                    generators[e] = generators[e-1].copy() #transfers the overcrossing element
+                    generators[e-1] += temp.copy() #[e-1] now holds the overcrossing followed by the undercrossing element
+                    temp = generators[e].copy() #temp now holds the overcrossing element
+                    for j in range(len(temp)): #temp will now hold the inverse of the overcrossing element
+                        temp[j] = -temp[j]
+                    generators[e-1] += temp.copy() #[e-1] now holds the undercrossing element conjugated by the overcrossing element
+                else:
+                    e = -e
+                    temp = generators[e-1].copy() #the undercrossing element
+                    generators[e-1] = generators[e].copy() #transfers the overcrossing element
+                    for j in range(len(generators[e])): #[e] will now hold the inverse of the overcrossing element
+                        generators[e][j] = -generators[e][j]
+                    generators[e] += temp.copy() #now holding the inverse overcrossing element followed by the undercrossing
+                    generators[e] += generators[e-1].copy() #[e] now holds the undercrossing element conjugated by the overcrossing
+            return generators
+
+        def generators_simplify(generatorsp):
+            generators = generatorsp.copy()
+            for i in range(len(generators)):
+                c = 0
+                while(c == 0):
+                    c = 1
+                    for j in range(len(generators[i])-1):
+                        if(generators[i][j] == -1*generators[i][j+1]):
+                            generators[i].pop(j)
+                            generators[i].pop(j)
+                            c = 0
+                            break
+            return generators
+
+        def generators_to_relations_alternating(generators):
+            n = int(len(generators)/2)
+            relations = [None]*(n)
+            for i in range(n):
+                relations[i] = generators[2*i].copy()
+                relations[i] += generators[2*i+1].copy()
+            return relations
+        
+        generators = generators_initialize_arbitrary(self.strands)
+
+
+        generators1 = generators.copy()
+        generators1 = generators_percolate(generators1,self.tangle_1.braid)
+        generators1 = generators_simplify(generators1)
+        print(generators1)
+
+        generators2 = generators.copy()
+        generators2 = generators_percolate(generators2,self.tangle_2.braid)
+        generators2 = generators_simplify(generators2)
+        print(generators2)
+
+        generators3 = generators.copy()
+        generators3 = generators_percolate(generators3,self.tangle_3.braid)
+        generators3 = generators_simplify(generators3)
+        print(generators3)
+
+
+        relations = generators_to_relations_alternating(generators1)
+        relations += generators_to_relations_alternating(generators2)
+        relations += generators_to_relations_alternating(generators3)
+
+        group = GroupPres(self.strands,relations)
+
+        return group
+
+    def fundamental_group_A_trivial(self):
+
+        def generators_initialize_A_trivial(n):
+            generators = [None]*n
+            for i in range(n):
+                if(i%2 == 0):
+                    generators[i] = [i+1]
+                else:
+                    generators[i] = [-1*(i)]
+            return generators
+
+        def generators_percolate(generatorsp,braid1):
+            generators = generatorsp.copy()
+            braid = braid1.braid
+            for i in range(len(braid)):
+                e = braid[i]
+                if(e>0):
+                    temp = generators[e].copy() #the undercrossing element
+                    generators[e] = generators[e-1].copy() #transfers the overcrossing element
+                    generators[e-1] += temp.copy() #[e-1] now holds the overcrossing followed by the undercrossing element
+                    temp = generators[e].copy() #temp now holds the overcrossing element
+                    for j in range(len(temp)): #temp will now hold the inverse of the overcrossing element
+                        temp[j] = -temp[j]
+                    generators[e-1] += temp.copy() #[e-1] now holds the undercrossing element conjugated by the overcrossing element
+                else:
+                    e = -e
+                    temp = generators[e-1].copy() #the undercrossing element
+                    generators[e-1] = generators[e].copy() #transfers the overcrossing element
+                    for j in range(len(generators[e])): #[e] will now hold the inverse of the overcrossing element
+                        generators[e][j] = -generators[e][j]
+                    generators[e] += temp.copy() #now holding the inverse overcrossing element followed by the undercrossing
+                    generators[e] += generators[e-1].copy() #[e] now holds the undercrossing element conjugated by the overcrossing
+            return generators
+
+        def generators_simplify(generatorsp):
+            generators = generatorsp.copy()
+            for i in range(len(generators)):
+                c = 0
+                while(c == 0):
+                    c = 1
+                    for j in range(len(generators[i])-1):
+                        if(generators[i][j] == -1*generators[i][j+1]):
+                            generators[i].pop(j)
+                            generators[i].pop(j)
+                            c = 0
+                            break
+            return generators
+
+        def generators_to_relations_alternating(generators):
+            n = int(len(generators)/2)
+            relations = [None]*(n)
+            for i in range(n):
+                relations[i] = generators[2*i].copy()
+                relations[i] += generators[2*i+1].copy()
+            return relations
+        
+        generators = generators_initialize_A_trivial(self.strands)
+
+
+        generators2 = generators.copy()
+        generators2 = generators_percolate(generators2,self.tangle_2.braid)
+        generators2 = generators_simplify(generators2)
+        print(generators2)
+
+        generators3 = generators.copy()
+        generators3 = generators_percolate(generators3,self.tangle_3.braid)
+        generators3 = generators_simplify(generators3)
+        print(generators3)
+
+
+        relations = generators_to_relations_alternating(generators2)
+        relations += generators_to_relations_alternating(generators3)
+
+        group = GroupPres(self.strands,relations)
+
+        return group
 
 
 class GroupPres:
