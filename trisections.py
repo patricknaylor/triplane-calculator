@@ -3,7 +3,7 @@
 # To add:
 
 # -triplanes:
-# compute fundamental group of triplane diagram; input: triplane class -> output grouppres class
+# compute fundamental group of triplane diagram; input: triplane class -> output grouppres class (should be done but needs check and/or tuning)
 # compute peripheral subgroup
 
 # -knots, etc
@@ -11,34 +11,6 @@
 # unlink detection -- use PD code to compute invariants using snappy
 # then certify unlink using LinkInfo database
 # make sure tangles are legitimate, i.e, can be built with no crossings
-
-
-
-def wirtrep_magma(rel):
-    wstr = ""
-    if(len(rel) == 0):
-        wstr = "1"
-        return wstr
-    i = 0
-    while i < len(rel):
-        c = list[i]
-        exp = 1
-        j = i+1
-        while j < len(rel):
-            if(rel[j] == c):
-                exp += 1
-                j += 1
-            else:
-                break
-        i = j
-        if(c>0 and exp==1):
-            wstr += ("x"+str(c)+"*")
-        elif(c>0):
-            wstr += ("(x"+str(c)+")^"+str(exp)+"*")
-        else:
-            wstr += ("(x"+str(-1*c)+")^"+str(-1*exp)+"*")
-    wstr = wstr[:-1]
-    return wstr
 
 
 class Braid:
