@@ -5,12 +5,14 @@
 # -triplanes:
 # compute fundamental group of triplane diagram; input: triplane class -> output grouppres class (should be done but needs check and/or tuning)
 # compute peripheral subgroup
+# property for triviality of first/two tangles
+# make sure tangles are legitimate, i.e, can be built with no crossings
+
 
 # -knots, etc
 # compute pd code from knot
 # unlink detection -- use PD code to compute invariants using snappy
 # then certify unlink using LinkInfo database
-# make sure tangles are legitimate, i.e, can be built with no crossings
 
 
 class Braid:
